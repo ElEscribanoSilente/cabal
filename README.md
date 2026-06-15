@@ -81,5 +81,9 @@ Exponentes racionales (aunque lleguen como `Real` o `float` entero) usan el ataj
 - Sin soporte de `hash` (igualdad semidecidible ⇒ no hashable). No es thread-safe.
 - Construir `exp/ln/sen/cos` evalúa una sonda barata del argumento.
 
+## Autoría
+
+Creado por **Escribano Silente**. Coautor: **esraderey**.
+
 MIT. `python3 test_cabal.py` corre las 792 anclas sin dependencias; los arneses de auditoría y
 estrés añaden ~3 400 verificaciones contra oráculos independientes.

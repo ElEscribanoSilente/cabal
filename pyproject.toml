@@ -9,7 +9,7 @@ description = "Números reales exactos (computables) con error certificado ≤ 1
 readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "MIT" }
-authors = [{ name = "esraderey" }]
+authors = [{ name = "Escribano Silente" }, { name = "esraderey" }]
 keywords = ["exact real arithmetic", "computable reals", "certified", "arbitrary precision", "interval"]
 classifiers = [
     "Programming Language :: Python :: 3",
