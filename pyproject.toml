@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cabal"
-version = "0.2.0"
+version = "0.2.1"
 description = "Números reales exactos (computables) con error certificado ≤ 1 ulp. Cero dependencias."
 readme = "README.md"
 requires-python = ">=3.8"

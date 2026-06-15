@@ -70,6 +70,16 @@ Se generan 4 000 árboles de expresión al azar (constantes racionales combinada
 
 El valor verdadero cayó **siempre** dentro del intervalo certificado.
 
+### 2.3 · Un error cazado y corregido (v0.2.1) · [`bench/float_redondeo.py`](bench/float_redondeo.py)
+
+El *fuzzing* diferencial de arriba destapó un fallo real: `float(x)` no siempre devolvía
+el `double` más cercano —quedaba a **1 ULP** por un doble redondeo interno (~2.8 % de los
+racionales, ~5.7 % de los opacos)—. El núcleo certificado nunca estuvo afectado; el bug
+vivía solo en la conversión con pérdida a `float`. Se corrigió en **0.2.1** (redondeo
+correcto *ties-to-even*) y se blindó con una regresión que recorre **~330 000 casos** contra
+`float(Fraction)` y mpmath sin un solo fallo. De hallazgo a *fix* en la misma sesión —ver
+[`CHANGELOG.md`](CHANGELOG.md).
+
 ---
 
 ## 3. Rendimiento · [`bench/benchmark.py`](bench/benchmark.py)
@@ -116,10 +126,11 @@ pip install cabal mpmath sympy     # sympy solo lo usa el benchmark
 # desde la raíz del repositorio:
 python bench/diferencial.py        # 123 comprobaciones curadas vs mpmath
 python bench/fuzz.py               # 3 476 árboles de expresión aleatorios
+python bench/float_redondeo.py     # redondeo correcto de float() (regresión 0.2.1)
 python bench/benchmark.py          # tabla de rendimiento
 ```
 
 ## 5. Entorno
 
-Windows 11 · Python 3.13.2 · cabal 0.2.0 (PyPI) · mpmath 1.3.0 · sympy 1.14.0.
+Windows 11 · Python 3.13.2 · cabal 0.2.1 · mpmath 1.3.0 · sympy 1.14.0.
 Los **tiempos absolutos varían por máquina**; lo relevante son las proporciones.

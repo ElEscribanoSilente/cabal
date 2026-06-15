@@ -11,9 +11,9 @@ Cada nodo lleva en comentario su cota de error demostrada.
 from __future__ import annotations
 
 from fractions import Fraction
-from math import isqrt, ldexp, isfinite
+from math import isqrt, isfinite
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 __all__ = ["Real", "R", "PI", "E", "LN2", "raiz", "exp", "ln", "sen", "cos",
            "tan", "atan", "Inseparables", "TOPE"]
 
@@ -191,20 +191,29 @@ class Real:
 
     # -- conversiones --
     def __float__(self):
+        fr = self._fr
+        if fr is not None:
+            return float(fr)  # CPython redondea el racional al double más cercano
         try:
             p, m = self._sonda(2200)  # doblando llega a 2048 bits: cubre 2^-1074
         except Inseparables:
-            return 0.0  # |x| < 2^-1098: bajo el subnormal mínimo
-        if abs(m).bit_length() < 56:
-            p += 56 - abs(m).bit_length()
+            return 0.0  # |x| < 2^-2200: indistinguible de 0
+        # Contrato: x ∈ [(m-1)/2^p, (m+1)/2^p]. Si ambos extremos redondean al
+        # MISMO double, ese es x correctamente redondeado (ties-to-even). Delegar en
+        # float(Fraction) evita el doble redondeo y trata bien subnormales/overflow.
+        for _ in range(8):
+            if p >= 0:
+                lo = float(Fraction(m - 1, 1 << p))
+                hi = float(Fraction(m + 1, 1 << p))
+            else:
+                lo = float(Fraction((m - 1) << -p))
+                hi = float(Fraction((m + 1) << -p))
+            if lo == hi:
+                return lo
+            p += 64           # cerco ambiguo (x cerca de un punto medio): refina
             m = self.aprox(p)
-        s = -1.0 if m < 0 else 1.0
-        a = abs(m)
-        bl = a.bit_length()
-        if bl > 64:
-            sh = bl - 64
-            return s * ldexp(float(a >> sh), sh - p)
-        return s * ldexp(float(a), -p)
+        # opaco exactamente en un punto medio de doubles: ties-to-even sobre el cerco
+        return float(Fraction(m, 1 << p)) if p >= 0 else float(Fraction(m << -p))
 
     def __repr__(self):
         try:
