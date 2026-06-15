@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cabal"
+version = "0.2.0"
+description = "Números reales exactos (computables) con error certificado ≤ 1 ulp. Cero dependencias."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [{ name = "esraderey" }]
+keywords = ["exact real arithmetic", "computable reals", "certified", "arbitrary precision", "interval"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "License :: OSI Approved :: MIT License",
+]
+
+[tool.setuptools]
+py-modules = ["cabal"]

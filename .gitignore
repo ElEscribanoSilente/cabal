@@ -1,0 +1,44 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# Distribución / empaquetado
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+wheels/
+MANIFEST
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# Test / cobertura
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+.cache/
+.mypy_cache/
+.ruff_cache/
+
+# Editores / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
