@@ -21,6 +21,10 @@ PI.intervalo(100)                       # cerco racional certificado: (Fraction,
 (raiz(2)**2 - 2).signo(tope=1024)       # Inseparables: igualdad de opacos = semidecidible. Honesto.
 ```
 
+📊 **[Validación y rendimiento →](VALIDACION.md)** — 3 599 comprobaciones diferenciales contra
+mpmath (0 fallos) y un benchmark honesto frente a `mpmath` / `decimal` / `sympy`. Reproducible con
+[`bench/`](bench/).
+
 ## Garantías y cómo se verifican
 
 - **Contrato ≤ 1 ulp por nodo**, con la cota de error demostrada en comentario junto a cada

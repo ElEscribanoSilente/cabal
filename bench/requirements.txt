@@ -1,0 +1,3 @@
+# Dependencias SOLO para validar/medir cabal (la librería en sí tiene cero).
+mpmath>=1.3      # oráculo independiente de alta precisión (diferencial.py, fuzz.py, benchmark.py)
+sympy>=1.12      # competidor extra en el benchmark (benchmark.py)
